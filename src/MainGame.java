@@ -10,7 +10,8 @@ public class MainGame {
 		char computerValue = 0;
 		int cChoice = 0;
 		char cont = ' ';
-		String preditions = "";
+		String pre = null;
+		String prediction = "";
 		while (gameState) {
 			System.out
 					.println("Rock Paper Sciccors\n1: Rock\n2: Paper\n3: Sciccors");
@@ -27,21 +28,32 @@ public class MainGame {
 			} else {
 				System.out.println("Its a tie");
 			}
-			preditions += playerValue;
+			prediction += playerValue;
+			if(prediction.length() > 4){
+				for(int i = (prediction.length()-4); i < prediction.length();i++){
+					pre += prediction.charAt(i);
+					
+					pre = null;
+				}
+				
+				
+				System.out.println("Will do something");
+			}
 			
 
 			boolean validIn = true;
 			while (validIn) {
 				System.out.println("Would you like to continue? y/n");
-				 cont = in.nextLine().charAt(0);
+				 cont = in.next().charAt(0);
 				if (cont == 'y' || cont == 'Y') {
-					gameState = false;
+					validIn = true;
 					validIn = false;
 				} else {
-					validIn = true;
+					gameState = false;
+					validIn = false;
 				}
 			}
-			System.out.println(preditions);
+			System.out.println(prediction);
 		}
 	}
 
