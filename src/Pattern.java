@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Pattern {
+public class Pattern implements Serializable{
 	private char[] patternValue;
 
 	public Pattern(String  pattern) {

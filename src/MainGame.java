@@ -9,8 +9,14 @@ public class MainGame {
 		boolean gameState = true;
 		char playerValue;
 		char computerValue = 0;
+		
 		System.out.println("1: Beginner \n2: Veteran");
-		int diff = checkInt
+		int gameDifficultly = checkInt(1,2);
+		
+		if(gameDifficultly == 2){
+			c.readFile();
+		}
+		
 		
 		while (gameState) {
 			System.out
@@ -37,6 +43,7 @@ public class MainGame {
 			}
 
 		}
+		c.writeFile();
 	}
 
 	public static int checkInt(int low, int high) {

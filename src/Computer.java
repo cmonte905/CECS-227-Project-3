@@ -1,12 +1,13 @@
 import java.io.*;
 import java.util.*;
 
-public class Computer implements Serializable{
-	HashMap<Pattern, Integer> patHash;
+public class Computer {
+	HashMap<Pattern, Integer> patternHash;
 	private String holdPat;
-
+	private File gameData = new File("gameData.dat");
+	
 	public Computer() {
-		patHash = new HashMap<Pattern, Integer>();
+		patternHash = new HashMap<Pattern, Integer>();
 		holdPat = "";
 	}
 
@@ -19,6 +20,7 @@ public class Computer implements Serializable{
 
 	public char prediction() {
 		if (holdPat.length() < 4) {
+		
 			return randomPredict();
 		} else {
 			int max = -1;
@@ -30,22 +32,22 @@ public class Computer implements Serializable{
 					holdPat.length()) + "S");
 			Pattern pMax = null;
 
-			if (patHash.containsKey(p1)) {
-				if (patHash.get(p1) > max) {
-					max = patHash.get(p1);
+			if (patternHash.containsKey(p1)) {
+				if (patternHash.get(p1) > max) {
+					max = patternHash.get(p1);
 					pMax = p1;
 				}
 			}
-			if (patHash.containsKey(p2)) {
+			if (patternHash.containsKey(p2)) {
 
-				if (patHash.get(p2) > max) {
-					max = patHash.get(p2);
+				if (patternHash.get(p2) > max) {
+					max = patternHash.get(p2);
 					pMax = p2;
 				}
 			}
-			if (patHash.containsKey(p3)) {
-				if (patHash.get(p3) > max) {
-					max = patHash.get(p3);
+			if (patternHash.containsKey(p3)) {
+				if (patternHash.get(p3) > max) {
+					max = patternHash.get(p3);
 					pMax = p3;
 				}
 			}
@@ -98,14 +100,50 @@ public class Computer implements Serializable{
 
 			Pattern p = new Pattern(holdPat);
 
-			if (patHash.containsKey(p)) {
-				patHash.put(p, patHash.get(p) + 1);
+			if (patternHash.containsKey(p)) {
+				patternHash.put(p, patternHash.get(p) + 1);
 			} else {
-				patHash.put(p, 1);
+				patternHash.put(p, 1);
 			}
 		}
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public void readFile(){		
+		if(gameData.exists()){
+			try {
+				ObjectInputStream intoFile = new ObjectInputStream(	new FileInputStream(gameData));
+							
+				patternHash = (HashMap<Pattern, Integer>) intoFile.readObject();
+				intoFile.close();
 
+			} catch (IOException e) {
+				System.out.println("Can not read file");
+			} catch (ClassNotFoundException e) {
+				System.out.println("Could not find the class");
+			}
+		}	
+		for(Pattern p : patternHash.keySet()){
+			System.out.println(Arrays.toString(p.getPattern()));
+		}
+	}
+	
+	public void writeFile(){	
+		for(Pattern p : patternHash.keySet()){
+			System.out.println(Arrays.toString(p.getPattern()));
+		}
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(gameData));
+			out.writeObject(patternHash);
+			out.close();
+		} catch (IOException e) {
+			System.out.println("Error processing the save.");
+		}
+				
+	}
+	
 	public int winLogic(char Player, char Comp) {
 
 		if (Player == 'R' && Comp == 'S') {
@@ -131,5 +169,7 @@ public class Computer implements Serializable{
 
 		}
 	}
+	
+	
 
 }
