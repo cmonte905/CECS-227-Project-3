@@ -1,24 +1,31 @@
 import java.util.*;
+
 public class Pattern {
-	private String patternValue;
-	public Pattern(String v){
-		this.patternValue = v;
+	private char[] patternValue;
+
+	public Pattern(String  pattern) {
+		this.patternValue = pattern.toCharArray();
 	}
-	
-	HashSet<Pattern> pat = new HashSet<Pattern>();
-	public int getPat(){
-		
-		return 0;
+
+	public char[] getPattern() {
+		return patternValue;
 	}
-	public int hashPattern(String p){
-		
-		 int pHash = p.hashCode();
-		
-		return pHash;
+
+	public int hashCode() {
+		return Arrays.hashCode(patternValue);
+
 	}
-	
-	
-	
-	
+
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof Pattern)) {
+			return false;
+		}
+		Pattern pa = (Pattern) o;
+		
+		return Arrays.equals(patternValue , pa.patternValue );
+	}
 	
 }
